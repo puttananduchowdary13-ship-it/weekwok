@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>WeekWok · PantryPlanner</title>
+<link rel="stylesheet" href="style.css" />
+</head>
+<body>
+<div class="orbs"><i></i><i></i><i></i><i></i></div>
+
+<!-- Sign-in screen: every request after this carries a session token -->
+<div class="auth" id="auth" hidden>
+  <div class="auth-card">
+    <h1>WeekWok</h1>
+    <p>Sign in to see your own pantry and weekly plan.</p>
+    <label for="user">Username</label>
+    <input id="user" autocomplete="username" />
+    <label for="pass">Password</label>
+    <input id="pass" type="password" autocomplete="current-password" />
+    <p class="form-error" id="authErr" role="alert"></p>
+    <div class="btn-row">
+      <button class="btn" id="btnLogin">Sign in</button>
+      <button class="btn ghost" id="btnRegister">Create account</button>
+    </div>
+  </div>
+</div>
+
+<div class="userbar">Signed in as <b id="who"></b> <button class="btn ghost sm" id="btnLogout">Sign out</button></div>
+
+<header class="hero">
+  <div class="hero-text">
+    <p class="eyebrow">WeekWok · PantryPlanner</p>
+    <h1>Plan meals. <span>Track pantry.</span> Shop smart.</h1>
+    <p class="sub">Drag a recipe onto your week and watch the pantry deduct and the grocery list build itself.</p>
+  </div>
+  <div class="scene">
+    <div class="cube">
+      <div class="face f1">🍚</div><div class="face f2">🧈</div><div class="face f3">🥕</div>
+      <div class="face f4">🍳</div><div class="face f5">🥛</div><div class="face f6">🍅</div>
+    </div>
+    <div class="shadow"></div>
+  </div>
+</header>
+
+<section class="stats">
+  <div class="stat tilt"><b id="stMeals">0</b><span>Meals planned</span></div>
+  <div class="stat tilt"><b id="stLow">0</b><span>Low stock</span></div>
+  <div class="stat tilt"><b id="stExp">0</b><span>Expiring ≤ 3 days</span></div>
+  <div class="stat tilt"><b id="stCost">₹0</b><span>Est. grocery cost</span></div>
+</section>
+
+<nav class="tabs">
+  <button class="tab active" data-view="planner">📅 Planner</button>
+  <button class="tab" data-view="pantry">🧺 Pantry</button>
+  <button class="tab" data-view="recipes">📖 Recipes</button>
+  <button class="tab" data-view="grocery">🛒 Grocery <em id="gBadge">0</em></button>
+</nav>
+
+<main>
+  <section id="planner" class="view active">
+    <div class="row-between">
+      <h2>Recipe tray <small>drag onto a slot, or tap “＋ Add”</small></h2>
+      <div class="btn-row">
+        <button class="btn ghost sm" id="btnClear">Clear plan</button>
+        <button class="btn ghost sm" id="btnReset">Reset demo</button>
+      </div>
+    </div>
+    <div class="filters"><input id="tSearch" placeholder="Search recipes or ingredients…" /><select id="tCat"></select></div>
+    <div class="tray" id="tray"></div>
+    <h2>Weekly board <small>five sessions a day · each can hold several items · ✓ cooks (deducts stock)</small></h2>
+    <div class="board-wrap"><div class="board" id="board"></div></div>
+  </section>
+
+  <section id="pantry" class="view">
+    <div class="row-between">
+      <h2>Pantry stock</h2>
+      <form id="addIngForm" class="inline-form">
+        <input id="newIngName" placeholder="New item name" required />
+        <input id="newIngQty" type="number" min="0" step="any" placeholder="Qty" required style="max-width:90px" />
+        <select id="newIngUnit"><option>g</option><option>kg</option><option>ml</option><option>L</option><option>pcs</option></select>
+        <input id="newIngExp" type="date" title="Expiry date (optional)" />
+        <input id="newIngPrice" type="number" min="0" step="any" placeholder="₹ per kg/L/pc" style="max-width:130px" />
+        <button class="btn">Add</button>
+      </form>
+    </div>
+    <div class="grid" id="pantryGrid"></div>
+  </section>
+
+  <section id="recipes" class="view">
+    <div class="row-between"><h2>Family recipe catalog</h2><select id="rCat"></select></div>
+    <div class="grid" id="recipeGrid"></div>
+  </section>
+
+  <section id="grocery" class="view">
+    <div class="row-between">
+      <h2>Consolidated grocery list</h2>
+      <div class="btn-row">
+        <button class="btn" id="btnWA">💬 Share on WhatsApp</button>
+        <button class="btn ghost" id="btnRestock">📦 Add ticked to pantry</button>
+      </div>
+    </div>
+    <form id="snackForm" class="inline-form">
+      <input id="snackName" placeholder="Add a snack or extra item 🍿" required />
+      <button class="btn">Add</button>
+    </form>
+    <div class="list" id="groceryList"></div>
+    <div class="total tilt">Estimated weekly total: <b id="gTotal">₹0</b></div>
+  </section>
+</main>
+
+<div class="modal" id="modal"><div class="modal-card" id="modalCard"></div></div>
+<div class="toast" id="toast"></div>
+
+<script src="script.js"></script>
+</body>
+</html>
