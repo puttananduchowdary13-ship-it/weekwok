@@ -1,0 +1,20 @@
+{
+  "name": "weekwok-pantryplanner",
+  "version": "2.0.0",
+  "description": "Family meal planner with pantry tracking, built as a 3-tier app (browser UI, Express API, SQLite).",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node --watch server.js",
+    "test": "node --test"
+  },
+  "engines": {
+    "node": ">=22.5"
+  },
+  "dependencies": {
+    "express": "^4.19.2"
+  },
+  "optionalDependencies": {
+    "better-sqlite3": "^11.3.0"
+  }
+}
